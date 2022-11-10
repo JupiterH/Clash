@@ -119,27 +119,6 @@ dns:
       - +.googleapis.com
       - +.gvt1.com
 proxies:
-  - name: 0.61 GB | 200 GB
-    type: trojan
-    server: q8at0puf.jrqiuq.sbs
-    port: 15002
-    password: 2Nx-AZmTe6jR1ZmtqYJrA
-    udp: true
-    skip-cert-verify: true
-  - name: Traffic Reset：30 Days Left
-    type: trojan
-    server: q8at0puf.jrqiuq.sbs
-    port: 15002
-    password: 2Nx-AZmTe6jR1ZmtqYJrA
-    udp: true
-    skip-cert-verify: true
-  - name: Expire Date：2023/11/17
-    type: trojan
-    server: q8at0puf.jrqiuq.sbs
-    port: 15002
-    password: 2Nx-AZmTe6jR1ZmtqYJrA
-    udp: true
-    skip-cert-verify: true
   - name: 🇭🇰 Hong Kong 01
     type: trojan
     server: q8at0puf.jrqiuq.sbs
@@ -571,9 +550,6 @@ proxy-groups:
   - name: Kuromis
     type: select
     proxies:
-      - 0.61 GB | 200 GB
-      - Traffic Reset：30 Days Left
-      - Expire Date：2023/11/17
       - 🇭🇰 Hong Kong 01
       - 🇭🇰 Hong Kong 02
       - 🇭🇰 Hong Kong 03
