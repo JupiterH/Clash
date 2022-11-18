@@ -1,3 +1,11 @@
 # Fix
+ - DOMAIN,ssl.gstatic.com
+ - DOMAIN,www.gstatic.com
  - DOMAIN-SUFFIX,googleapis.cn
  - DOMAIN-SUFFIX,google.cn
+ - DOMAIN-SUFFIX,googleapis-cn.com
+ - DOMAIN-SUFFIX,googleapps-cn.com
+ - DOMAIN-SUFFIX,googleflights-cn.net
+ - DOMAIN-SUFFIX,googlecnapps.cn
+ - DOMAIN-SUFFIX,gstatic-cn.com
+ - DOMAIN-SUFFIX,gstatic.cn
