@@ -13,3 +13,5 @@ DOMAIN-SUFFIX,gstatic.cn
 # APEX
 DOMAIN,r5-pc.s3.amazonaws.com   
 DOMAIN-SUFFIX,stryder.respawn.com
+# Bing
+DOMAIN-SUFFIX,bing.com
