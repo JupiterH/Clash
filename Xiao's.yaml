@@ -1,0 +1,410 @@
+port: 7890
+socks-port: 7891
+redir-port: 7892
+tproxy-port: 7893
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: true
+profile:
+  tracing: true
+dns:
+  enable: true
+  ipv6: true
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  default-nameserver:
+    - "[2402:4e00::]:53"
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver:
+    - "[2402:4e00::]:53"
+    - 119.29.29.29
+    - 223.5.5.5
+  fallback: 
+    - 208.67.222.222:5353
+    - 208.67.220.220:5353
+    - 208.67.222.220:5353
+    - 208.67.220.222:5353
+    - https://1.1.1.1/dns-query
+    - https://1.1.1.2/dns-query
+    - https://1.1.1.3/dns-query
+    - https://1.0.0.1/dns-query
+    - https://1.0.0.2/dns-query
+    - https://1.0.0.3/dns-query
+    - https://45.11.45.11/dns-query
+    - https://146.112.41.2/dns-query
+    - https://162.159.36.1/dns-query
+    - https://162.159.46.1/dns-query
+    - https://9.9.9.11:5053/dns-query
+    - https://101.6.6.6:8443/dns-query
+    - https://208.67.222.222/dns-query
+    - https://208.67.220.220/dns-query
+    - https://185.222.222.222/dns-query
+    - https://101.101.101.101/dns-query
+    - https://149.112.112.11:5053/dns-query
+  fallback-filter:
+    geoip: true
+    ipcidr: 
+      - 240.0.0.0/4
+
+proxy-providers:
+  Proxy:
+    type: http
+    url: 订阅链接
+    path: sub/Proxy.yaml
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇭🇰香港:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇭🇰|港|Hong|HK'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇸🇬新加坡:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇸🇬|新加坡|Singapore|SG'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇨🇳台湾:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇨🇳|台湾|Tai|TW'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇯🇵日本:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇯🇵|日本|Japan|JP'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇺🇸美国:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇺🇸|美国|States|US'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🇪🇺欧洲:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇷🇺|🇺🇦|🇲🇩|🇪🇪|🇱🇻|🇱🇹|🇨🇿|🇸🇰|🇭🇺|🇵🇱|🇮🇪|🇬🇧|🇧🇪|🇳🇱|🇫🇷|🇱🇺|🇩🇪|🇲🇨|🇦🇹|🇨🇭|🇱🇮|🇮🇸|🇩🇰|🇫🇮|🇳🇴|🇸🇪|🇵🇹|🇪🇸|🇧🇬|🇬🇷|🇻🇦|🇦🇩|🇷🇴|🇲🇹|🇸🇮|🇭🇷|🇷🇸|🇲🇰|🇲🇪|🇧🇦|🇦🇱|🇨🇾|🇮🇹|🇷🇪'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+      
+  🤍:
+    type: http
+    url: 订阅链接
+    path: sub/Xiao.yaml
+    interval: 86400
+    filter: '🇲🇴|🇵🇭|🇮🇩|🇰🇭|🇮🇳|🇯🇴|🇮🇷|🇮🇱|🇹🇷|🇦🇺|🇪🇬|🇿🇦|🇨🇦|🇲🇾|🇹🇭|🇰🇷|🇻🇳|🇲🇳|🇧🇭|🇳🇵|🇧🇩|🇦🇪|🇦🇲|🇬🇪|🇵🇰|🇰🇿|🇰🇬|🇺🇿|🇲🇽|🇵🇦|🇵🇷|🇨🇷|🇧🇷|🇨🇱|🇵🇪|🇦🇷|🇺🇾|🇨🇼|🇵🇾|🇨🇴|🇻🇪|🇬🇹|🇪🇬|🇲🇦|🇹🇳|🇱🇾|🇰🇪|🇳🇬|🇲🇺|🇳🇿'
+    health-check:
+      enable: true
+      url: http://1.1.1.1/generate_204
+      interval: 300
+
+proxy-groups:
+
+  - name: Proxy
+    type: select
+    use:
+      - Proxy
+
+  - name: Xiao
+    type: select
+    proxies:
+      - Proxy
+      - 🇭🇰香港
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🇯🇵日本
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🤍
+
+  - name: Netflix
+    type: select
+    proxies:
+      - Xiao
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🇯🇵日本
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🤍
+
+  - name: Streaming
+    type: select
+    proxies:
+      - Xiao
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🇯🇵日本
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🤍
+
+  - name: Global
+    type: select
+    proxies:
+      - Xiao
+      - 🇭🇰香港
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🇯🇵日本
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🤍
+
+  - name: PayPal
+    type: select
+    proxies:
+      - Xiao
+      - DIRECT
+      - 🇭🇰香港
+      - 🇺🇸美国
+
+  - name: Game
+    type: select
+    proxies:
+      - Xiao
+      - DIRECT
+      - 🇭🇰香港
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🇯🇵日本
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🤍
+      
+  - name: Apple
+    type: select
+    proxies:
+      - Xiao
+      - DIRECT
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇪🇺欧洲
+      - 🇯🇵日本
+      - 🇨🇳台湾
+      - 🇸🇬新加坡
+      - 🤍
+
+  - name: Final
+    type: select
+    proxies:
+      - DIRECT
+      - Xiao
+
+  - name: 🇭🇰香港
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://1.1.1.1/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 🇭🇰香港
+
+  - name: 🇸🇬新加坡
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://1.1.1.1/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 🇸🇬新加坡
+
+  - name: 🇨🇳台湾
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://1.1.1.1/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 🇨🇳台湾
+
+  - name: 🇯🇵日本
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://1.1.1.1/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 🇯🇵日本
+
+  - name: 🇺🇸美国
+    type: select
+    use:
+      - 🇺🇸美国
+
+  - name: 🇪🇺欧洲
+    type: select
+    use:
+      - 🇪🇺欧洲
+
+  - name: 🤍
+    type: select
+    use:
+      - 🤍
+
+rule-providers:
+  Advertising:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/Advertising.yaml
+  Hijacking:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Hijacking/Hijacking.yaml"
+    interval: 86400
+    path: ./ruleset/Hijacking.yaml
+  Privacy:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Privacy/Privacy_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/Privacy.yaml
+  China:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/China.yaml
+  Game:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml"
+    interval: 86400
+    path: ./ruleset/Game.yaml
+  Apple:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/Apple.yaml
+  Netflix:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml"
+    interval: 86400
+    path: ./ruleset/Netflix.yaml
+  HBOAsia:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBOAsia/HBOAsia.yaml"
+    interval: 86400
+    path: ./ruleset/HBOAsia.yaml
+  HBOMAX:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBOUSA/HBOUSA.yaml"
+    interval: 86400
+    path: ./ruleset/HBOMAX.yaml
+  Streaming:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/Streaming.yaml
+  PayPal:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml"
+    interval: 86400
+    path: ./ruleset/PayPal.yaml
+  Telegram:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml"
+    interval: 86400
+    path: ./ruleset/Telegram.yaml
+  Global:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
+    interval: 86400
+    path: ./ruleset/Global.yaml
+  Lan:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml"
+    interval: 86400
+    path: ./ruleset/Lan.yaml
+
+rules:
+  # misakaF公益服emby
+  - DOMAIN,misakaf.org,DIRECT
+  # Google
+  - DOMAIN,ssl.gstatic.com,Xiao
+  - DOMAIN,www.gstatic.com,Xiao
+  - DOMAIN,xn--ngstr-lra8j.com,Xiao
+  - DOMAIN-SUFFIX,googleapis.cn,Xiao
+  - DOMAIN-SUFFIX,google.cn,Xiao
+  - DOMAIN-SUFFIX,googleapis-cn.com,Xiao
+  - DOMAIN-SUFFIX,googleapps-cn.com,Xiao
+  - DOMAIN-SUFFIX,googleflights-cn.net,Xiao
+  - DOMAIN-SUFFIX,googlecnapps.cn,Xiao
+  - DOMAIN-SUFFIX,gstatic-cn.com,Xiao
+  - DOMAIN-SUFFIX,gstatic.cn,Xiao
+# APEX
+  - DOMAIN,r5-pc.s3.amazonaws.com,Xiao
+  - DOMAIN-SUFFIX,stryder.respawn.com,Xiao
+# Bing
+  - DOMAIN-SUFFIX,bing.com,Xiao
+# Rule
+  - RULE-SET,Advertising,REJECT
+  - RULE-SET,Hijacking,REJECT
+  - RULE-SET,Privacy,REJECT
+  - RULE-SET,China,DIRECT
+  - RULE-SET,Game,Game
+  - RULE-SET,Apple,Apple
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,HBOAsia,🇨🇳台湾
+  - RULE-SET,HBOMAX,🇺🇸美国
+  - RULE-SET,Streaming,Streaming
+  - RULE-SET,PayPal,PayPal
+  - RULE-SET,Telegram,🇸🇬新加坡
+  - RULE-SET,Global,Global
+  - RULE-SET,Lan,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,Final
