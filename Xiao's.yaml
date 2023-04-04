@@ -447,9 +447,9 @@ rules:
   # chatGPT
   - DOMAIN-SUFFIX,openai.com,🇺🇸美国
   # 阿里云
-  - DOMAIN-SUFFIX,aliyun.com,DIRECT
-  - DOMAIN-SUFFIX,alibaba.com,DIRECT
-  - DOMAIN-SUFFIX,alicdn.com,DIRECT
+  - DOMAIN-KEYWORD,aliyun,DIRECT
+  - DOMAIN-KEYWORD,alibaba,DIRECT
+  - DOMAIN-KEYWORD,alicdn,DIRECT
   # Rule
   - RULE-SET,Advertising,REJECT
   - RULE-SET,Hijacking,REJECT
