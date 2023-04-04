@@ -444,9 +444,9 @@ rule-providers:
 rules:
   # misakaF公益服emby
   - DOMAIN-KEYWORD,misakaf,Xiao
-  # chatGPT
+  # ChatGPT
   - DOMAIN-SUFFIX,openai.com,🇺🇸美国
-  # 阿里云
+  # Alibaba（工作需要，不要可以删了）
   - DOMAIN-KEYWORD,aliyun,DIRECT
   - DOMAIN-KEYWORD,alibaba,DIRECT
   - DOMAIN-KEYWORD,alicdn,DIRECT
