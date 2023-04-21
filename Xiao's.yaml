@@ -472,8 +472,14 @@ rule-providers:
     path: ./ruleset/Lan.yaml
 
 rules:
+  # misakaF公益服emby
+  - DOMAIN-KEYWORD,misakaf,Xiao
   # ChatGPT
   - DOMAIN-SUFFIX,openai.com,🇺🇸美国
+  # 阿里云
+  - DOMAIN-KEYWORD,aliyun,DIRECT
+  - DOMAIN-KEYWORD,alibaba,DIRECT
+  - DOMAIN-KEYWORD,alicdn,DIRECT
   # Rule
   - RULE-SET,Direct,DIRECT
   - RULE-SET,Download,DIRECT
