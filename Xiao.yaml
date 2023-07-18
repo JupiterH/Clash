@@ -86,7 +86,7 @@ dns:
 pr:   &a3  {type: select,   proxies: [DIRECT, 🌙Xiao, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
 px:   &a10 {type: select,   proxies: [DIRECT, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
 p:    &a1  {type: http,     interval: 86400,  health-check: {enable: true, url: http://1.1.1.1/generate_204, interval: 1800} }
-auto: &a4  {type: url-test, lazy: true,  url: http://1.1.1.1/generate_204, interval: 900, use: [XIAO] }
+auto: &a4  {type: load-balance, strategy: consistent-hashing, lazy: true,  url: http://1.1.1.1/generate_204, interval: 900, tolerance: 50, use: [XIAO] }
 use:  &a2  {type: select,   use: [XIAO] }
 c:    &a6  {type: http,     behavior: classical, interval: 86400}
 d:    &a5  {type: http,     behavior: domain,    interval: 86400}
