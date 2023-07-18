@@ -83,14 +83,14 @@ dns:
 #========= 建立锚点 =========#
 
 # 策略组引用
-pr:   &a3  {type: select,   proxies: [DIRECT, 🌙Xiao, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
-px:   &a10 {type: select,   proxies: [DIRECT, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
-p:    &a1  {type: http,     interval: 86400,  health-check: {enable: true, url: http://1.1.1.1/generate_204, interval: 1800} }
-auto: &a4  {type: load-balance, strategy: consistent-hashing, lazy: true,  url: http://1.1.1.1/generate_204, interval: 900, tolerance: 50, use: [XIAO] }
-use:  &a2  {type: select,   use: [XIAO] }
-c:    &a6  {type: http,     behavior: classical, interval: 86400}
-d:    &a5  {type: http,     behavior: domain,    interval: 86400}
-i:    &a7  {type: http,     behavior: ipcidr,    interval: 86400}
+pr:   &a3  {type: select,         proxies: [DIRECT, 🌙Xiao, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍]                                          }
+px:   &a10 {type: select,         proxies: [DIRECT, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍]                                                  }
+p:    &a1  {type: http,           interval: 86400,  health-check: {enable: true, url: http://1.1.1.1/generate_204, interval: 1800}                       }
+auto: &a4  {type: load-balance,   strategy: consistent-hashing, lazy: true,  url: http://1.1.1.1/generate_204, interval: 900, tolerance: 50, use: [XIAO] }
+use:  &a2  {type: select,         use: [XIAO]                                                                                                            }
+c:    &a6  {type: http,           behavior: classical, interval: 86400                                                                                   }
+d:    &a5  {type: http,           behavior: domain,    interval: 86400                                                                                   }
+i:    &a7  {type: http,           behavior: ipcidr,    interval: 86400                                                                                   }
 
 proxy-providers:
   XIAO:
@@ -101,15 +101,15 @@ proxy-providers:
 proxies: null
 proxy-groups:
 #分流分组
-  - {name: 🌙Xiao,  <<: *a10}
-  - {name: Netflix, <<: *a3}
-  - {name: Streaming, <<: *a3}
-  - {name: Global, <<: *a3}
-  - {name: PayPal, <<: *a3}
-  - {name: Game, <<: *a3}
-  - {name: Apple, <<: *a3}
-  - {name: Microsoft, <<: *a3}
-  - {name: Final, <<: *a3}
+  - {name: 🌙Xiao,     <<: *a10}
+  - {name: Netflix,    <<: *a3 }
+  - {name: Streaming,  <<: *a3 }
+  - {name: Global,     <<: *a3 }
+  - {name: PayPal,     <<: *a3 }
+  - {name: Game,       <<: *a3 }
+  - {name: Apple,      <<: *a3 }
+  - {name: Microsoft,  <<: *a3 }
+  - {name: Final,      <<: *a3 }
   
 #节点分组
   - {name: 🇭🇰香港,   <<: *a4, filter: "🇭🇰|港|Hong|HK"          }
