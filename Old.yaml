@@ -85,7 +85,7 @@ dns:
 proxy-providers:
   Proxy:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Proxy.yaml
     interval: 86400
     health-check:
@@ -95,7 +95,7 @@ proxy-providers:
       
   🇭🇰香港:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     filter: '🇭🇰|港|Hong|HK'
@@ -106,7 +106,7 @@ proxy-providers:
       
   🇸🇬新加坡:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     filter: '🇸🇬|新加坡|Singapore|SG'
@@ -117,7 +117,7 @@ proxy-providers:
       
   🇨🇳台湾:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     filter: '🇨🇳|台湾|Tai|TW'
@@ -128,7 +128,7 @@ proxy-providers:
       
   🇯🇵日本:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     filter: '🇯🇵|日本|Japan|JP'
@@ -139,7 +139,7 @@ proxy-providers:
       
   🇺🇸美国:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     filter: '🇺🇸|美国|States|US'
@@ -150,7 +150,7 @@ proxy-providers:
       
   🇪🇺欧洲:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-EU
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     health-check:
@@ -160,7 +160,7 @@ proxy-providers:
       
   🤍:
     type: http
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-ALL
+    url: 订阅链接
     path: sub/Xiao.yaml
     interval: 86400
     health-check:
