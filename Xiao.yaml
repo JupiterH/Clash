@@ -80,15 +80,15 @@ i:    &a7  {type: http,         behavior: ipcidr,    interval: 86400}
 proxy-providers:
   XIAO:
     <<: *a1
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-XIAO
+    url: 订阅链接
     path: ./proxy_providers/tmp1.yaml
   EU:
     <<: *a1
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-EU
+    url: 订阅链接
     path: ./proxy_providers/tmp2.yaml
   ALL:
     <<: *a1
-    url: https://gist.githubusercontent.com/JupiterH/0e0aaba63a5cbc25a02b907995287069/raw/Clash-ALL
+    url: 订阅链接
     path: ./proxy_providers/tmp3.yaml
 
 proxies: null
