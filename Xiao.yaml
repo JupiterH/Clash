@@ -121,7 +121,7 @@ rule-providers:
   AD:           {<<: *a5, url: https://anti-ad.net/clash.yaml,                                                                                         path: ./ruleset/AD.yaml           }
   Bing:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml,                              path: ./ruleset/Bing.yaml         }
   Microsoft:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                    path: ./ruleset/Microsoft.yaml    }
-  GoogleCN:     {<<: *a6, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list,                            path: ./ruleset/GoogleCN.yaml     }
+  GoogleCN:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/GoogleCN.yaml,                                                    path: ./ruleset/GoogleCN.yaml     }
   Adobe:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Adobe/Adobe.yaml,                            path: ./ruleset/Adobe.yaml        }
   China:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml, path: ./ruleset/China.yaml        }
   GameDownload: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload/GameDownload.yaml,         path: ./ruleset/GameDownload.yaml }
@@ -139,31 +139,33 @@ rule-providers:
 
 rules:
   # MisakaF Emby
-  - DOMAIN-SUFFIX,misakaf.org, 🌙Xiao
+  - DOMAIN-SUFFIX,misakaf.org,🌙Xiao
+  # 谷歌商店下载
+  - DOMAIN-SUFFIX,googleapis.cn,Global
   # 阿里云
   - DOMAIN-KEYWORD,aliyun,DIRECT
   - DOMAIN-KEYWORD,alibaba,DIRECT
   - DOMAIN-KEYWORD,alicdn,DIRECT
   # Rule
+  - RULE-SET,AD,REJECT
+  - RULE-SET,Lan,DIRECT
   - RULE-SET,Direct,DIRECT
   - RULE-SET,Download,DIRECT
   - RULE-SET,GameDownload,DIRECT
-  - RULE-SET,AD,REJECT
   - RULE-SET,Game,Game
+  - RULE-SET,Adobe,Adobe
   - RULE-SET,Apple,Apple
   - RULE-SET,Bing,🇭🇰香港
   - RULE-SET,Microsoft,Microsoft
-  - RULE-SET,Adobe,Adobe
-  - RULE-SET,China,DIRECT
+  - RULE-SET,Telegram,🇸🇬新加坡
+  - RULE-SET,PayPal,PayPal
   - RULE-SET,Netflix,Netflix
   - RULE-SET,HBOAsia,🇨🇳台湾
   - RULE-SET,HBOMAX,🇺🇲美国
   - RULE-SET,OpenAI,🇺🇲美国
   - RULE-SET,Streaming,Streaming
-  - RULE-SET,PayPal,PayPal
-  - RULE-SET,Telegram,🇸🇬新加坡
   - RULE-SET,GoogleCN,Global
   - RULE-SET,Global,Global
-  - RULE-SET,Lan,DIRECT
+  - RULE-SET,China,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
   - MATCH,Final
