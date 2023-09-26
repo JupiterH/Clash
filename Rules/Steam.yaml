@@ -10,9 +10,7 @@ payload:
   - DOMAIN,cdn.steampowered.com
   - DOMAIN,steamusercontent.com
   - DOMAIN,steamcontent.com
-  - DOMAIN,*.steamcontent.com
   - DOMAIN,steamstatic.com
-  - DOMAIN,*.cm.steampowered.com
   - DOMAIN,steam-chat.com
   - DOMAIN,oss-cn-shanghai.aliyuncs.com
   - DOMAIN,st.dl.eccdnx.com
@@ -53,3 +51,5 @@ payload:
   - DOMAIN,steam.cdn.orcon.net.nz
   - DOMAIN,steam.cdn.slingshot.co.nz
   - DOMAIN,steam.cdn.webra.ru
+  - DOMAIN-KEYWORD,steamcontent.com
+  - DOMAIN-KEYWORD,cm.steampowered.com
