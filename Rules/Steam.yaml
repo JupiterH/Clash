@@ -1,6 +1,6 @@
 # NAME: Steam
 # AUTHOR: Xiao
-# UPDATED: 2023-09-26 09:21:17
+# UPDATED: 2023-09-27 09:15
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 payload:
   - DOMAIN,steamstat.com
