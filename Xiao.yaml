@@ -136,7 +136,7 @@ rule-providers:
   Adobe:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Adobe/Adobe.yaml,                                 path: ./ruleset/Adobe.yaml        }
   China:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical_No_Resolve.yaml,      path: ./ruleset/China.yaml        }
   GameDownload: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload/GameDownload.yaml,              path: ./ruleset/GameDownload.yaml }
-  Steam:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/steam.yaml,                                                            path: ./ruleset/Steam.yaml        }
+  Steam:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/Steam.yaml,                                                            path: ./ruleset/Steam.yaml        }
   Game:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game_No_Resolve.yaml,                        path: ./ruleset/Game.yaml         }
   Apple:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml,            path: ./ruleset/Apple.yaml        }
   Netflix:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml,                             path: ./ruleset/Netflix.yaml      }
@@ -151,9 +151,9 @@ rule-providers:
 
 rules:
   # 规则修正
+  - DOMAIN-KEYWORD,alibaba,DIRECT
   - DOMAIN-SUFFIX,misakaf.org,🌙Xiao
   - DOMAIN-SUFFIX,googleapis.cn,🌙Xiao
-  - DOMAIN-KEYWORD,alibaba,DIRECT
   # Rule
   - RULE-SET,AD,REJECT
   - RULE-SET,Lan,DIRECT
