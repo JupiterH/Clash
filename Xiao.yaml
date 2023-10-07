@@ -1,4 +1,4 @@
-# Update Time: 2023-09-06
+# Update Time: 2023-09-28
 
 port: 7890           # HTTP 代理端口
 socks-port: 7891     # Socks 端口
@@ -21,6 +21,7 @@ dns:
   listen: 0.0.0.0:53 # dns 监听
   enhanced-mode: fake-ip
   use-hosts: true
+  prefer-h3: true
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - '*.lan'
@@ -43,31 +44,34 @@ dns:
     - "*.battlenet.com"
     - "*.blzstatic.cn"
     - "*.battle.net"
-  nameserver:        # 默认 DNS 服务
-    - 119.29.29.29
-    - 223.5.5.5
-  fallback:          # 国外 DNS 服务器
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
-    - https://dns.alidns.com/dns-query
-    - 208.67.222.222:5353
-    - 208.67.220.220:5353
-    - 208.67.222.220:5353
-    - 208.67.220.222:5353
+  nameserver:        # GeoIP 为 CN 时使用的 DNS NameServer（使用DoH/DoT）
+    - 223.5.5.5      # 阿里DNS
+    - 119.29.29.29   # 腾讯DNS
+    - tls://223.5.5.5:853
+    - https://223.5.5.5/dns-query
+  fallback:          # GeoIP 不是 CN 时使用的 DNS NameServer（使用DoH/DoT）
+    - 1.1.1.1
+    - 1.0.0.1
+    - 8.8.8.8
+    - tls://dns.rubyfish.cn:853
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
     - https://1.1.1.1/dns-query
-    - https://1.1.1.2/dns-query
-    - https://1.1.1.3/dns-query
+    - https://8.8.8.8/dns-query
+    - https://cloudflare-dns.com/dns-query
   fallback-filter:
     geoip: true
     geoip-code: CN
     ipcidr:
       - 240.0.0.0/4
+      - 127.0.0.1/8
+      - 0.0.0.0/32
       
 #========= 建立锚点 =========#
 
 # 策略组引用
-pr:   &a3  {type: select,       proxies: [DIRECT, 🌙Xiao, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
-px:   &a10 {type: select,       proxies: [DIRECT, 🇭🇰香港, 🇸🇬新加坡, 🇺🇲美国, 🇯🇵日本, 🇨🇳台湾, 🇪🇺欧洲, 🤍] }
+pr:   &a3  {type: select,       proxies: [DIRECT, 🌙Xiao, 🇭🇰Hong Kong, 🇸🇬Singapore, 🇺🇲United States, 🇯🇵Japan, 🇨🇳Taiwan, 🇪🇺Europe, 🤍] }
+px:   &a10 {type: select,       proxies: [DIRECT, 🇭🇰Hong Kong, 🇸🇬Singapore, 🇺🇲United States, 🇯🇵Japan, 🇨🇳Taiwan, 🇪🇺Europe, 🤍] }
 p:    &a1  {type: http,         interval: 86400,  health-check: {enable: true, url: http://1.1.1.1/generate_204, interval: 1800} }
 auto: &a4  {type: load-balance, strategy: consistent-hashing, lazy: true,  url: http://1.1.1.1/generate_204, interval: 900, tolerance: 50, use: [XIAO] }
 use:  &a2  {type: select,       use: [XIAO] }
@@ -91,6 +95,13 @@ proxy-providers:
     url: 订阅链接
     path: ./proxy_providers/tmp3.yaml
 
+# clah  p核正则
+#   (A).*(B)         节点名既有 A 也有 B 
+#   (A)|(B)          节点名有 A 或者 B   
+#   ^(?!.*A)         节点名不含有 A 
+#   ^(?!.*A).*(B)    节点名不含有 A 但含有 B
+#   ^(?!.*(A|B))     节点名既不含有 A 也不含有 B
+
 proxies: null
 proxy-groups:
 #分流分组
@@ -106,65 +117,63 @@ proxy-groups:
   - {name: Final,      <<: *a3 }
   
 #节点分组
-  - {name: 🇭🇰香港,   <<: *a4, filter: "🇭🇰|港|Hong|HK"          }
-  - {name: 🇸🇬新加坡, <<: *a4, filter: "🇸🇬|新加坡|SG|Singapore"  } 
-  - {name: 🇺🇲美国,  <<: *a4, filter: "🇺🇸|美国|States|US"       }
-  - {name: 🇯🇵日本,  <<: *a4, filter: "🇯🇵|日本|Japan|JP"        }
-  - {name: 🇨🇳台湾,  <<: *a4, filter: "🇨🇳|台湾|Tai|TW"          }
-  - {name: 🇪🇺欧洲,  <<: *a8                                    }
+  - {name: 🇭🇰Hong Kong,   <<: *a4, filter: "🇭🇰|港|Hong|HK"          }
+  - {name: 🇸🇬Singapore, <<: *a4, filter: "🇸🇬|新加坡|SG|Singapore"  } 
+  - {name: 🇺🇲United States,  <<: *a4, filter: "🇺🇸|美国|States|US"       }
+  - {name: 🇯🇵Japan,  <<: *a4, filter: "🇯🇵|日本|Japan|JP"        }
+  - {name: 🇨🇳Taiwan,  <<: *a4, filter: "🇨🇳|台湾|Tai|TW"          }
+  - {name: 🇪🇺Europe,  <<: *a8                                    }
   - {name: 🤍,     <<: *a9                                    }
 
 # 分流规则 
 rule-providers:
-  Direct:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct_No_Resolve.yaml,               path: ./ruleset/Direct.yaml       }
-  Download:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,                      path: ./ruleset/Download.yaml     }
-  AD:           {<<: *a5, url: https://anti-ad.net/clash.yaml,                                                                                         path: ./ruleset/AD.yaml           }
-  Bing:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml,                              path: ./ruleset/Bing.yaml         }
-  Microsoft:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                    path: ./ruleset/Microsoft.yaml    }
-  GoogleCN:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/GoogleCN.yaml,                                                    path: ./ruleset/GoogleCN.yaml     }
-  Adobe:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Adobe/Adobe.yaml,                            path: ./ruleset/Adobe.yaml        }
-  China:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml, path: ./ruleset/China.yaml        }
-  GameDownload: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload/GameDownload.yaml,         path: ./ruleset/GameDownload.yaml }
-  Game:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game_No_Resolve.yaml,                   path: ./ruleset/Game.yaml         }
-  Apple:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml,       path: ./ruleset/Apple.yaml        }
-  Netflix:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml,                        path: ./ruleset/Netflix.yaml      }
-  HBOAsia:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBOAsia/HBOAsia.yaml,                        path: ./ruleset/HBOAsia.yaml      }
-  HBOMAX:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBO/HBO.yaml,                                path: ./ruleset/HBOMAX.yaml       }
-  Streaming:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml,      path: ./ruleset/Streaming.yaml    }
-  OpenAI:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml,                          path: ./ruleset/OpenAI.yaml       }
-  PayPal:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml,                          path: ./ruleset/PayPal.yaml       }
-  Telegram:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram_No_Resolve.yaml,           path: ./ruleset/Telegram.yaml     }
-  Global:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite_No_Resolve.yaml,         path: ./ruleset/Global.yaml       }
-  Lan:          {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml,                     path: ./ruleset/Lan.yaml          }
+  Direct:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct_No_Resolve.yaml,                    path: ./ruleset/Direct.yaml       }
+  Download:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,                           path: ./ruleset/Download.yaml     }
+  AD:           {<<: *a5, url: https://anti-ad.net/clash.yaml,                                                                                              path: ./ruleset/AD.yaml           }
+  Bing:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml,                                   path: ./ruleset/Bing.yaml         }
+  Microsoft:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                         path: ./ruleset/Microsoft.yaml    }
+  GoogleCN:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/GoogleCN.yaml,                                                         path: ./ruleset/GoogleCN.yaml     }
+  Adobe:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Adobe/Adobe.yaml,                                 path: ./ruleset/Adobe.yaml        }
+  China:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical_No_Resolve.yaml,      path: ./ruleset/China.yaml        }
+  GameDownload: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/GameDownload/GameDownload.yaml,              path: ./ruleset/GameDownload.yaml }
+  Steam:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/steam.yaml,                                                            path: ./ruleset/Steam.yaml        }
+  Game:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game_No_Resolve.yaml,                        path: ./ruleset/Game.yaml         }
+  Apple:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml,            path: ./ruleset/Apple.yaml        }
+  Netflix:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml,                             path: ./ruleset/Netflix.yaml      }
+  HBOAsia:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBOAsia/HBOAsia.yaml,                             path: ./ruleset/HBOAsia.yaml      }
+  HBOMAX:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBO/HBO.yaml,                                     path: ./ruleset/HBOMAX.yaml       }
+  Streaming:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml,path: ./ruleset/Streaming.yaml    }
+  OpenAI:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml,                               path: ./ruleset/OpenAI.yaml       }
+  PayPal:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml,                               path: ./ruleset/PayPal.yaml       }
+  Telegram:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram_No_Resolve.yaml,                path: ./ruleset/Telegram.yaml     }
+  Global:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Proxy/Proxy_Classical_No_Resolve.yaml,            path: ./ruleset/Global.yaml       }
+  Lan:          {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml,                          path: ./ruleset/Lan.yaml          }
 
 rules:
-  # MisakaF Emby
+  # 规则修正
   - DOMAIN-SUFFIX,misakaf.org,🌙Xiao
-  # 谷歌商店下载
-  - DOMAIN-SUFFIX,googleapis.cn,Global
-  # 阿里云
-  - DOMAIN-KEYWORD,aliyun,DIRECT
+  - DOMAIN-SUFFIX,googleapis.cn,🌙Xiao
   - DOMAIN-KEYWORD,alibaba,DIRECT
-  - DOMAIN-KEYWORD,alicdn,DIRECT
   # Rule
   - RULE-SET,AD,REJECT
   - RULE-SET,Lan,DIRECT
+  - RULE-SET,Steam,DIRECT
   - RULE-SET,Direct,DIRECT
   - RULE-SET,Download,DIRECT
+  - RULE-SET,GoogleCN,DIRECT
   - RULE-SET,GameDownload,DIRECT
+  - RULE-SET,Bing,🌙Xiao
+  - RULE-SET,HBOAsia,🇨🇳Taiwan
+  - RULE-SET,Telegram,🇸🇬Singapore
+  - RULE-SET,HBOMAX,🇺🇲United States
+  - RULE-SET,OpenAI,🇺🇲United States
   - RULE-SET,Game,Game
   - RULE-SET,Adobe,Adobe
   - RULE-SET,Apple,Apple
-  - RULE-SET,Bing,🇭🇰香港
-  - RULE-SET,Microsoft,Microsoft
-  - RULE-SET,Telegram,🇸🇬新加坡
   - RULE-SET,PayPal,PayPal
   - RULE-SET,Netflix,Netflix
-  - RULE-SET,HBOAsia,🇨🇳台湾
-  - RULE-SET,HBOMAX,🇺🇲美国
-  - RULE-SET,OpenAI,🇺🇲美国
+  - RULE-SET,Microsoft,Microsoft
   - RULE-SET,Streaming,Streaming
-  - RULE-SET,GoogleCN,Global
   - RULE-SET,Global,Global
   - RULE-SET,China,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
