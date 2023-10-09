@@ -18,9 +18,12 @@ payload:
   - DOMAIN,steam-chat.com
   - DOMAIN,api.steampowered.com
   - DOMAIN-KEYWORD,cm.steampowered.com
-  - DOMAIN-KEYWORD,steamserver.net
-  - DOMAIN-KEYWORD,steamcontent.com
-  - DOMAIN-KEYWORD,cm.steampowered.com
+  - DOMAIN-SUFFIX,rmbgame.net
+  - DOMAIN-SUFFIX,steamstatic.com
+  - DOMAIN-SUFFIX,steamserver.net
+  - DOMAIN-SUFFIX,steamcontent.com
+  - DOMAIN-SUFFIX,api.steampowered.com
+  - DOMAIN-SUFFIX,test.steampowered.com
   - IP-CIDR,103.10.124.0/24,no-resolve
   - IP-CIDR,103.10.125.0/24,no-resolve
   - IP-CIDR,103.28.54.0/24,no-resolve
