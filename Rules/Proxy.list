@@ -1,17 +1,10 @@
-# Google
-DOMAIN,ssl.gstatic.com
-DOMAIN,www.gstatic.com
-DOMAIN,xn--ngstr-lra8j.com
-DOMAIN-SUFFIX,googleapis.cn
-DOMAIN-SUFFIX,google.cn
-DOMAIN-SUFFIX,googleapis-cn.com
-DOMAIN-SUFFIX,googleapps-cn.com
-DOMAIN-SUFFIX,googleflights-cn.net
-DOMAIN-SUFFIX,googlecnapps.cn
-DOMAIN-SUFFIX,gstatic-cn.com
-DOMAIN-SUFFIX,gstatic.cn
-# APEX
-DOMAIN,r5-pc.s3.amazonaws.com   
-DOMAIN-SUFFIX,stryder.respawn.com
-# Bing
-DOMAIN-SUFFIX,bing.com
+# NAME: 规则修正  PROXY
+# AUTHOR: Xiao
+# UPDATED: 2023-10-13 16:18
+payload:
+# Fix
+  - DOMAIN-KEYWORD,misakaf,⚡️Xiao
+  - DOMAIN-SUFFIX,vercel.app,⚡️Xiao
+  - DOMAIN-SUFFIX,duolingo.cn,⚡️Xiao
+  - DOMAIN-SUFFIX,duolingo.com,⚡️Xiao
+  - DOMAIN-KEYWORD,jsdelivr.net,⚡️Xiao
