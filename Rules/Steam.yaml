@@ -17,7 +17,6 @@ payload:
   - DOMAIN-SUFFIX,rmbgame.net
   - DOMAIN-SUFFIX,steamstatic.com
   - DOMAIN-SUFFIX,steamserver.net
-  - DOMAIN-SUFFIX,steamcontent.com
   - DOMAIN-SUFFIX,api.steampowered.com
   - DOMAIN-SUFFIX,test.steampowered.com
   - IP-CIDR,103.10.124.0/24,no-resolve
