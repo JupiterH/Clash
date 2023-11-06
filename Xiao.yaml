@@ -1,24 +1,56 @@
-# Update Time: 2023-10-13
+# For CLash Meta
+# Update Time: 2023-11-06
 
-port: 7890           # HTTP 代理端口
-socks-port: 7891     # Socks 端口
-redir-port: 7892     # Redir 端口
-tproxy-port: 7893    # tproxy 端口
-mixed-port: 7890     # 混合端口
-allow-lan: true      # 允许局域网连接
-bind-address: "*"    # 地址绑定
-mode: rule           # 规则模式
-log-level: info      # 日志级别
-ipv6: false          # IPV6开关
+# port: 7890           # HTTP 代理端口
+# socks-port: 7891     # Socks 端口
+# redir-port: 7892     # Redir 端口
+# tproxy-port: 7893    # tproxy 端口
+
+mode: rule             # 规则模式
+ipv6: true             # IPV6开关
+log-level: info        # 日志级别
+allow-lan: true        # 允许局域网连接
+mixed-port: 7890       # HTTP(S) 和 SOCKS 代理混合端口
+bind-address: "*"      # 地址绑定
+unified-delay: true
+tcp-concurrent: true
 external-controller: 127.0.0.1:9090
+skip-auth-prefixes:    # 设置跳过验证的IP段
+  - 127.0.0.1/8
+  - ::1/128
+
+find-process-mode: strict
+
+geox-url:
+  geoip:   "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb:    "https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb"
+# 嗅探
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+# Tun模式
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - 'any:53'
+  auto-route: true
+  auto-detect-interface: true
 profile:
   store-selected: true
   tracing: false
   store-fake-ip: true
+# DNS 配置
 dns:
-  enable: true       # 不使用系统 DNS
-  ipv6: false        # ipv6开关
-  listen: 0.0.0.0:53 # dns 监听
+  enable: true         # 不使用系统 DNS
+  ipv6: true           # ipv6开关
+  listen: 0.0.0.0:53   # dns 监听
   enhanced-mode: fake-ip
   use-hosts: true
   prefer-h3: true
@@ -44,28 +76,36 @@ dns:
     - "*.battlenet.com"
     - "*.blzstatic.cn"
     - "*.battle.net"
-  nameserver:        # GeoIP 为 CN 时使用的 DNS NameServer（使用DoH/DoT）
-    - 223.5.5.5      # 阿里DNS
-    - 119.29.29.29   # 腾讯DNS
+  default-nameserver:        # 用于解析 DNS 服务器 的域名
+    - 223.5.5.5              # 阿里 DNS
+    - 8.8.8.8                # Google DNS     
+  nameserver:                # GeoIP 为 CN 时使用的 DNS NameServer（使用DoH/DoT）
     - tls://223.5.5.5:853
-    - https://223.5.5.5/dns-query
-  fallback:          # GeoIP 不是 CN 时使用的 DNS NameServer（使用DoH/DoT）
-    - 1.1.1.1
-    - 1.0.0.1
-    - 8.8.8.8
-    - tls://dns.rubyfish.cn:853
-    - tls://1.0.0.1:853
+    - https://223.5.5.5/dns-query#h3=true
+    - '[2400:3200::1]:53'    # 阿里 DNS IPv6
+  fallback:                  # GeoIP 不是 CN 时使用的 DNS NameServer（使用DoH/DoT）
+    - tls://1.1.1.1:853
     - tls://dns.google:853
     - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
-    - https://cloudflare-dns.com/dns-query
+    - '[2001:4860:4860::8888]:53'
+  nameserver-policy:         # 配置查询域名使用的 DNS 服务器
+    "geosite:cn,private":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
   fallback-filter:
     geoip: true
     geoip-code: CN
+    geosite:
+      - gfw
     ipcidr:
       - 240.0.0.0/4
       - 127.0.0.1/8
       - 0.0.0.0/32
+    domain:
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
       
 #========= 建立锚点 =========#
 
@@ -133,9 +173,8 @@ proxy-groups:
 
 # 分流规则 
 rule-providers:
-  AD:           {<<: *a5, url: https://anti-ad.net/clash.yaml,                                                                                              path: ./ruleset/AD.yaml           }
-  Proxy:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/Proxy.yaml,                                                            path: ./ruleset/Proxy.yaml        }
-  Unbreak:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/Direct.yaml,                                                           path: ./ruleset/Direct.yaml       }
+  # AD:         {<<: *a5, url: https://anti-ad.net/clash.yaml,                                                                                              path: ./ruleset/AD.yaml           }
+  Steam:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/Steam.yaml,                                                            path: ./ruleset/Direct.yaml       }
   GoogleCN:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/JupiterH/Clash@main/Rules/GoogleCN.yaml,                                                         path: ./ruleset/GoogleCN.yaml     }
   HBOMAX:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/HBO/HBO.yaml,                                     path: ./ruleset/HBOMAX.yaml       }
   Bing:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bing/Bing.yaml,                                   path: ./ruleset/Bing.yaml         }
@@ -157,28 +196,40 @@ rule-providers:
   Streaming:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml,path: ./ruleset/Streaming.yaml    }
 
 rules:
+  # Direct
+  - DOMAIN-SUFFIX,ikea.cn,DIRECT
+  - DOMAIN-KEYWORD,alibaba,DIRECT
+  - DOMAIN-SUFFIX,amazon.cn,DIRECT
+  - DOMAIN,fourier.taobao.com,DIRECT
+  - DOMAIN,sdkapp.uve.weibo.com,DIRECT
+  # Proxy
+  - DOMAIN-KEYWORD,misakaf,🌙Xiao
+  - DOMAIN-SUFFIX,duolingo.cn,🌙Xiao
+  - DOMAIN-SUFFIX,duolingo.com,🌙Xiao
+  - DOMAIN-KEYWORD,jsdelivr.net,🌙Xiao
+  - DOMAIN-SUFFIX,googleapis.cn,🌙Xiao
   # Rule
-  - RULE-SET,AD,REJECT
+# - RULE-SET,AD,REJECT
   - RULE-SET,Lan,DIRECT
   - RULE-SET,Direct,DIRECT
-  - RULE-SET,Unbreak,DIRECT
+  - RULE-SET,Steam,DIRECT
   - RULE-SET,Download,DIRECT
-  - RULE-SET,GoogleCN,DIRECT
   - RULE-SET,GameDownload,DIRECT
   - RULE-SET,Bing,🌙Xiao
-  - RULE-SET,Proxy,🌙Xiao
-  - RULE-SET,HBOAsia,🇨🇳Taiwan
+  - RULE-SET,GoogleCN,🌙Xiao
   - RULE-SET,Telegram,🇸🇬Singapore
-  - RULE-SET,HBOMAX,🇺🇲United States
   - RULE-SET,OpenAI,🇺🇲United States
   - RULE-SET,Game,Game
   - RULE-SET,Adobe,Adobe
-  - RULE-SET,Apple,Apple
   - RULE-SET,PayPal,PayPal
-  - RULE-SET,Netflix,Netflix
+  - RULE-SET,Apple,Apple
   - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,HBOAsia,🇨🇳Taiwan
+  - RULE-SET,HBOMAX,🇪🇺Europe
+  - RULE-SET,Netflix,Netflix
   - RULE-SET,Streaming,Streaming
   - RULE-SET,Global,Global
   - RULE-SET,China,DIRECT
+  - GEOSITE,CN,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
   - MATCH,Final
