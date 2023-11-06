@@ -7,7 +7,7 @@
 # tproxy-port: 7893    # tproxy 端口
 
 mode: rule             # 规则模式
-ipv6: true             # IPV6开关
+ipv6: false            # IPV6开关
 log-level: info        # 日志级别
 allow-lan: true        # 允许局域网连接
 mixed-port: 7890       # HTTP(S) 和 SOCKS 代理混合端口
@@ -49,7 +49,7 @@ profile:
 # DNS 配置
 dns:
   enable: true         # 不使用系统 DNS
-  ipv6: true           # ipv6开关
+  ipv6: false          # ipv6开关
   listen: 0.0.0.0:53   # dns 监听
   enhanced-mode: fake-ip
   use-hosts: true
@@ -81,17 +81,15 @@ dns:
   nameserver:                # GeoIP 为 CN 时使用的 DNS NameServer（使用DoH/DoT）
     - tls://223.5.5.5:853
     - https://223.5.5.5/dns-query#h3=true
-    - '[2400:3200::1]:53'    # 阿里 DNS IPv6
   fallback:                  # GeoIP 不是 CN 时使用的 DNS NameServer（使用DoH/DoT）
     - tls://1.1.1.1:853
     - tls://dns.google:853
     - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
-    - '[2001:4860:4860::8888]:53'
   nameserver-policy:         # 配置查询域名使用的 DNS 服务器
     "geosite:cn,private":
-      - https://doh.pub/dns-query
-      - https://dns.alidns.com/dns-query
+      - https://223.5.5.5/dns-query
+      - https://1.12.12.12/dns-query
   fallback-filter:
     geoip: true
     geoip-code: CN
