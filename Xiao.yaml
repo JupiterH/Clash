@@ -77,7 +77,6 @@ dns:
     - "*.blzstatic.cn"
     - "*.battle.net"
   default-nameserver:        # 用于解析 DNS 服务器 的域名
-    - 223.5.5.5              # 阿里 DNS
     - 8.8.8.8                # Google DNS     
   nameserver:                # GeoIP 为 CN 时使用的 DNS NameServer（使用DoH/DoT）
     - tls://223.5.5.5:853
