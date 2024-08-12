@@ -7,7 +7,6 @@ payload:
   - DOMAIN-KEYWORD,alibaba
   - DOMAIN-KEYWORD,misakaf
   - DOMAIN-SUFFIX,amazon.cn
-  - DOMAIN,fourier.taobao.com
 # Steam
   - DOMAIN,steamstat.com
   - DOMAIN,steamgames.com
