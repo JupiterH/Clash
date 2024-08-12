@@ -3,7 +3,7 @@
 # UPDATED: 2023-10-13 16:18
 payload:
 # Fix
-  - DOMAIN-KEYWORD,misakaf
+#  - DOMAIN-KEYWORD,misakaf
   - DOMAIN-SUFFIX,duolingo.cn
   - DOMAIN-SUFFIX,duolingo.com
   - DOMAIN-KEYWORD,jsdelivr.net
