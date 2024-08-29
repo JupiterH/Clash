@@ -10,7 +10,6 @@ payload:
   - DOMAIN-SUFFIX,duolingo.com
   - DOMAIN-KEYWORD,jsdelivr.net
   - DOMAIN-SUFFIX,googleapis.cn
-  - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,sevices.googleapis.com
 
 # 谷歌中国服务 services.googleapis.cn
