@@ -75,10 +75,10 @@ payload:
   - DOMAIN-KEYWORD,announce
   - DOMAIN-KEYWORD,torrent
   - DOMAIN-KEYWORD,tracker
-  - URL-REGEX,(Subject|HELO|SMTP)
-  - URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
-  - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
-  - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
+# - URL-REGEX,(Subject|HELO|SMTP)
+# - URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
+# - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
+# - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
 
   # Steam
   - DOMAIN,csgo.wmsj.cn
