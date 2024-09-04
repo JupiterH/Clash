@@ -12,10 +12,6 @@ payload:
   - DOMAIN-SUFFIX,googleapis.cn
   - DOMAIN-SUFFIX,sevices.googleapis.com
 
-# Google
-  - DOMAIN-KEYWORD,rr2---sn
-  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com
-
 # Bing
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,bing.com.cn
