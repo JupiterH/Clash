@@ -11,9 +11,7 @@ payload:
 # Emby
 # Magpie
   - DOMAIN-KEYWORD,magpie
-# MisakaF
-  - DOMAIN-KEYWORD,misakaf
-# 终点站
+# Terminus
   - DOMAIN,emby.wtf
   - DOMAIN,pub1.emby.wtf
   - DOMAIN,pub2.emby.wtf
