@@ -3,6 +3,9 @@
 # UPDATED: 2024-09-11
   
 payload:
+
+# Emby
+
 # Fix
   - DOMAIN-SUFFIX,boxjs.com
   - DOMAIN-SUFFIX,vercel.app
