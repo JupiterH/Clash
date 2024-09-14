@@ -21,6 +21,9 @@ payload:
 # MisakaF
   - DOMAIN-SUFFIX,misakaf.org
 
+# Other
+  - IP-CIDR,34.96.255.226/32,no-resolve
+
 # PROCESS
   - PROCESS-NAME,Emby
   - PROCESS-NAME,Infuse
