@@ -17,4 +17,6 @@ payload:
 
 # PROCESS
   - PROCESS-NAME,Emby
+  - PROCESS-NAME,yamby
   - PROCESS-NAME,Infuse
+  - PROCESS-NAME,SenPlayer
