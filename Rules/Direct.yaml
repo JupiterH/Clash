@@ -1,6 +1,6 @@
 # NAME: DIRECT
 # AUTHOR: Xiao
-# UPDATED: 2024-09-11
+# UPDATED: 2024-09-25
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 
@@ -17,6 +17,7 @@ payload:
   - DOMAIN-SUFFIX,vkvm.info
   - DOMAIN-SUFFIX,misaka.io
   - DOMAIN-SUFFIX,sharon.io
+  - DOMAIN-SUFFIX,spartanhost.org
 
 # 直播源
   - PROCESS-NAME,APTV
