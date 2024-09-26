@@ -7,8 +7,8 @@
 payload:
 
 # Fix
-  - DOMAIN-KEYWORD,alibaba
   - DOMAIN,open.daraz.com
+  - DOMAIN-KEYWORD,alibaba
 
 # VPS
   - DOMAIN-SUFFIX,wepc.au
