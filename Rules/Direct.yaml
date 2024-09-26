@@ -6,10 +6,9 @@
 
 payload:
 
-# Emby
-
 # Fix
   - DOMAIN-KEYWORD,alibaba
+  - DOMAIN,open.daraz.com
 
 # VPS
   - DOMAIN-SUFFIX,wepc.au
