@@ -6,10 +6,6 @@
 
 payload:
 
-# Emby
-
-# Fix
-  - DOMAIN-KEYWORD,alibaba
 
 # VPS
   - DOMAIN-SUFFIX,wepc.au
