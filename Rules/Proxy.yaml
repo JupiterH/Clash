@@ -1,17 +1,17 @@
 # NAME: PROXY
 # AUTHOR: Xiao
-# UPDATED: 2025-03-13
+# UPDATED: 2026-04-07
   
 payload:
-
-
-# Fix
+  # Fix
+  - DOMAIN-SUFFIX,trakt.tv
   - DOMAIN-SUFFIX,boxjs.com
   - DOMAIN-SUFFIX,vercel.app
   - DOMAIN-SUFFIX,duolingo.cn
+  - DOMAIN-SUFFIX,rfchost.com
   - DOMAIN-KEYWORD,ultramobile
-  - DOMAIN-SUFFIX,duolingo.com
   - DOMAIN-SUFFIX,jsdelivr.net
+  - DOMAIN-SUFFIX,duolingo.com
   - DOMAIN-SUFFIX,googleapis.cn
   - DOMAIN-SUFFIX,sevices.googleapis.com
 
@@ -47,6 +47,7 @@ payload:
   - DOMAIN-SUFFIX,thegithubshop.com
   - DOMAIN-KEYWORD,github
 
+
 # Bing
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,bing.com.cn
@@ -58,7 +59,7 @@ payload:
   - DOMAIN-SUFFIX,bingvisualsearch.com
   - DOMAIN-SUFFIX,bingworld.com
 
-# 谷歌中国服务 services.googleapis.cn
+# Google CN
   - IP-CIDR,120.232.181.162/32,no-resolve
   - IP-CIDR,120.241.147.226/32,no-resolve
   - IP-CIDR,120.253.253.226/32,no-resolve
