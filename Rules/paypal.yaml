@@ -250,5 +250,5 @@ payload:
   - DOMAIN-SUFFIX,xoom.net.cn
   - DOMAIN-SUFFIX,xoom.us
   - DOMAIN-SUFFIX,xoomcom.com
+  - DOMAIN-SUFFIX,braintree-api.com
   - DOMAIN-KEYWORD,paypal
-USER-AGENT,PayPal*
