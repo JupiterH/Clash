@@ -1,71 +1,31 @@
-# NAME: DIRECT
+# NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2024-09-11
+# UPDATED: 2026-09-30
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
+# steam下载登录，VPS官网，Emby直连等
 
 payload:
-
 
 # VPS
   - DOMAIN-SUFFIX,wepc.au
   - DOMAIN-SUFFIX,yxvm.com
   - DOMAIN-SUFFIX,vkvm.info
+  - DOMAIN-SUFFIX,vmiss.com
   - DOMAIN-SUFFIX,misaka.io
-  - DOMAIN-SUFFIX,sharon.io
+  - DOMAIN-SUFFIX,peekabo.io
+  - DOMAIN-SUFFIX,bagevm.com
+  - DOMAIN-SUFFIX,666clouds.com
+  - DOMAIN-SUFFIX,spartanhost.org
 
 # 直播源
-  - PROCESS-NAME,APTV
   - DOMAIN-SUFFIX,hndt.com
   - DOMAIN-SUFFIX,51zmt.top
   - DOMAIN-SUFFIX,ottdns.com
   - DOMAIN-SUFFIX,appwuhan.com
+  - DOMAIN-SUFFIX,miguvideo.com
 
-# Download
-  - PROCESS-NAME,BitComet
-  - PROCESS-NAME,BitComet.exe
-  - PROCESS-NAME,BitComet_x64.exe
-  - PROCESS-NAME,DownloadService
-  - PROCESS-NAME,DownloadService.exe
-  - PROCESS-NAME,Folx
-  - PROCESS-NAME,Folx.exe
-  - PROCESS-NAME,NetTransport
-  - PROCESS-NAME,NetTransport.exe
-  - PROCESS-NAME,Thunder
-  - PROCESS-NAME,Thunder.exe
-  - PROCESS-NAME,Transmission
-  - PROCESS-NAME,Transmission.exe
-  - PROCESS-NAME,WebTorrent
-  - PROCESS-NAME,WebTorrent.exe
-  - PROCESS-NAME,WebTorrentHelper
-  - PROCESS-NAME,WebTorrentHelper.exe
-  - PROCESS-NAME,Weiyun
-  - PROCESS-NAME,Weiyun.exe
-  - PROCESS-NAME,aria2c
-  - PROCESS-NAME,aria2c.exe
-  - PROCESS-NAME,baidunetdisk.exe
-  - PROCESS-NAME,fdm
-  - PROCESS-NAME,fdm.exe
-  - PROCESS-NAME,qbittorrent
-  - PROCESS-NAME,qbittorrent.exe
-  - PROCESS-NAME,uTorrent
-  - PROCESS-NAME,uTorrent.exe
-  - DOMAIN-SUFFIX,qbittorrent.org
-  - DOMAIN-SUFFIX,smtp
-  - DOMAIN-SUFFIX,xunlei.com
-  - DOMAIN-KEYWORD,thunder
-  - DOMAIN-KEYWORD,xlliveud
-  - DOMAIN-KEYWORD,yunpan
-  - DOMAIN-KEYWORD,aria2
-  - DOMAIN-KEYWORD,announce
-  - DOMAIN-KEYWORD,torrent
-  - DOMAIN-KEYWORD,tracker
-# - URL-REGEX,(Subject|HELO|SMTP)
-# - URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
-# - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
-# - URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
-
-  # Steam
+# Steam
   - DOMAIN,csgo.wmsj.cn
   - DOMAIN,dl.steam.clngaa.com
   - DOMAIN,dl.steam.ksyna.com
@@ -78,15 +38,11 @@ payload:
   - DOMAIN,steamstatic.com.8686c.com
   - DOMAIN,wmsjsteam.com
   - DOMAIN,xz.pphimalayanrt.com
-  - DOMAIN,steamstat.com
-  - DOMAIN,steamgames.com
-  - DOMAIN,akamaihd.net
   - DOMAIN,steamstat.us
   - DOMAIN,steamstat.com
   - DOMAIN,steamgames.com
   - DOMAIN,akamaihd.net
   - DOMAIN,cdn.steampowered.com
-  - DOMAIN,steamusercontent.com
   - DOMAIN,steam-chat.com
   - DOMAIN-SUFFIX,rmbgame.net
   - DOMAIN-SUFFIX,steamstatic.com
@@ -142,3 +98,8 @@ payload:
   - IP-CIDR,208.64.202.0/24,no-resolve
   - IP-CIDR,208.64.203.0/24,no-resolve
   - IP-CIDR,208.78.164.0/22,no-resolve
+
+  # 淘宝
+  - IP-CIDR,155.102.0.0/16,no-resolve
+  - IP-CIDR,47.246.0.0/16,no-resolve
+  - IP-CIDR,23.32.0.0/16,no-resolve
