@@ -8,7 +8,9 @@
 payload:
 
 # 禾苗
-  - DOMAIN-KEYWORD,sprocomm
+  - DOMAIN-SUFFIX,sprocomm.com,DIRECT
+  - DOMAIN-SUFFIX,qiye.aliyun.com,DIRECT
+  - DOMAIN-SUFFIX,mxhichina.com,DIRECT
   
 # VPS
   - DOMAIN-SUFFIX,wepc.au
