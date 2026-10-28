@@ -7,6 +7,10 @@
 
 payload:
 
+# Xiao
+  - DOMAIN-SUFFIX,xsylwh.com
+  - DOMAIN-SUFFIX,xsylwh.vip
+
 # 禾苗
   - DOMAIN-SUFFIX,sprocomm.com
   - DOMAIN-SUFFIX,qiye.aliyun.com
