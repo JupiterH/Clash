@@ -1,0 +1,232 @@
+# 配置名称: Clash 通用配置（mihomo）
+# 配置作者: JupiterH
+# 更新时间: 2026-11-11
+# 适用内核: mihomo（Clash.Meta）1.19+，可用于 Clash Verge Rev、Mihomo Party、FlClash 等客户端
+# 对应 Surge 版本: https://github.com/JupiterH/Surge/blob/main/Universal.conf
+#
+# 使用方法：
+#   1. 把 proxy-providers 里「订阅」的 url 换成你的机场订阅链接（只需改这一处）
+#   2. 分流规则来自 https://github.com/SukkaW/Surge ，顺序按其 README：
+#      所有 domainset / non_ip 规则都放在 ip 规则之前，避免对需要代理的域名提前发起 DNS 解析
+
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: strict
+
+# 外部控制（面板）。如需局域网访问，改为 0.0.0.0:9090 并设置 secret
+external-controller: 127.0.0.1:9090
+secret: ""
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+
+# TUN 模式。多数客户端在界面里有开关，会覆盖这里的设置
+tun:
+  enable: false
+  stack: mixed
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "+.ntp.org.cn"
+    - "+.pool.ntp.org"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "localhost.ptlogin2.qq.com"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+# 节点订阅
+NodeParam: &NodeParam {type: http, interval: 86400, health-check: {enable: true, url: 'https://latency-test.skk.moe/endpoint', interval: 300, lazy: true, timeout: 3000, expected-status: 204}}
+
+proxy-providers:
+  订阅:
+    <<: *NodeParam
+    url: '替换为你的订阅链接'
+    path: ./proxy_providers/subscription.yaml
+
+# 自建节点写在这里，例如：
+# proxies:
+#   - {name: 🇭🇰 自建, type: ss, server: 服务器IP, port: 端口, cipher: 2022-blake3-aes-128-gcm, password: 密码, udp: true}
+
+# 地区分组参数（对应 Surge 的 smart 分组）
+UrlTest: &UrlTest {type: url-test, use: [订阅], interval: 300, tolerance: 50, lazy: true, url: 'https://latency-test.skk.moe/endpoint', expected-status: 204, timeout: 3000}
+
+proxy-groups:
+  # 功能分组
+  - {name: 🚀 节点选择, type: select, proxies: [♻️ 自动选择, 🇭🇰 香港, 🇨🇳 台湾, 🇯🇵 日本, 🇸🇬 新加坡, 🇺🇸 美国, DIRECT]}
+  - {name: 🤖 AI, type: select, proxies: [🇺🇸 美国, 🇯🇵 日本, 🇸🇬 新加坡, 🇨🇳 台湾, 🚀 节点选择]}
+  - {name: 📺 流媒体, type: select, proxies: [🚀 节点选择, 🇭🇰 香港, 🇨🇳 台湾, 🇯🇵 日本, 🇸🇬 新加坡, 🇺🇸 美国, DIRECT]}
+  - {name: ✈️ Telegram, type: select, proxies: [🚀 节点选择, 🇭🇰 香港, 🇸🇬 新加坡, 🇯🇵 日本, 🇺🇸 美国]}
+  - {name: 🍎 Apple, type: select, proxies: [DIRECT, 🚀 节点选择, 🇭🇰 香港, 🇺🇸 美国]}
+  - {name: Ⓜ️ 微软, type: select, proxies: [DIRECT, 🚀 节点选择, 🇭🇰 香港, 🇺🇸 美国]}
+  - {name: 🅰️ Adobe, type: select, proxies: [DIRECT, 🚀 节点选择, REJECT]}
+  - {name: 💳 PayPal, type: select, proxies: [🇺🇸 美国, 🚀 节点选择, DIRECT]}
+  - {name: ⬇️ 下载, type: select, proxies: [🚀 节点选择, DIRECT, 🇭🇰 香港]}
+  - {name: 🌐 国外网站, type: select, proxies: [🚀 节点选择, 🇭🇰 香港, 🇨🇳 台湾, 🇯🇵 日本, 🇸🇬 新加坡, 🇺🇸 美国]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, DIRECT]}
+  # 地区分组：从「订阅」中按节点名称筛选
+  - {name: ♻️ 自动选择, <<: *UrlTest}
+  - {name: 🇭🇰 香港, <<: *UrlTest, filter: "🇭🇰|港|Hong|HK"}
+  - {name: 🇨🇳 台湾, <<: *UrlTest, filter: "🇹🇼|台|Taiwan|TW"}
+  - {name: 🇯🇵 日本, <<: *UrlTest, filter: "🇯🇵|日本|Japan|JP"}
+  - {name: 🇸🇬 新加坡, <<: *UrlTest, filter: "🇸🇬|新加坡|狮城|Singapore|SG"}
+  - {name: 🇺🇸 美国, <<: *UrlTest, filter: "🇺🇸|美国|States|US"}
+
+# 规则集参数：classical / domain / ipcidr 三种格式，每天更新
+Classical: &Classical {type: http, behavior: classical, format: text, interval: 86400}
+Domain: &Domain {type: http, behavior: domain, format: text, interval: 86400}
+IPCIDR: &IPCIDR {type: http, behavior: ipcidr, format: text, interval: 86400}
+
+rule-providers:
+  # 拦截（Reject.list 为自维护的拦截修正，如芒果 TV P2P 信令）
+  reject_custom: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/Reject.list', path: ./ruleset/Reject.list, proxy: 🚀 节点选择}
+  sogouinput: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/sogouinput.txt', path: ./sukkaw_ruleset/sogouinput.txt}
+  reject_non_ip_drop: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt', path: ./sukkaw_ruleset/reject_non_ip_drop.txt}
+  reject_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/reject.txt', path: ./sukkaw_ruleset/reject_domainset.txt}
+  reject_extra_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/reject_extra.txt', path: ./sukkaw_ruleset/reject_extra_domainset.txt}
+  reject_phishing_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/reject_phishing.txt', path: ./sukkaw_ruleset/reject_phishing_domainset.txt}
+  reject_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/reject.txt', path: ./sukkaw_ruleset/reject_non_ip.txt}
+  reject_non_ip_no_drop: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/reject-no-drop.txt', path: ./sukkaw_ruleset/reject_non_ip_no_drop.txt}
+  # 直连、测速、CDN、流媒体
+  direct_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/direct.txt', path: ./sukkaw_ruleset/direct_non_ip.txt}
+  speedtest_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/speedtest.txt', path: ./sukkaw_ruleset/speedtest_domainset.txt}
+  cdn_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/cdn.txt', path: ./sukkaw_ruleset/cdn_domainset.txt}
+  cdn_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/cdn.txt', path: ./sukkaw_ruleset/cdn_non_ip.txt}
+  stream_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/stream.txt', path: ./sukkaw_ruleset/stream_non_ip.txt}
+  # AI、Telegram
+  ai_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/ai.txt', path: ./sukkaw_ruleset/ai_non_ip.txt}
+  apple_intelligence_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/apple_intelligence.txt', path: ./sukkaw_ruleset/apple_intelligence_non_ip.txt}
+  telegram_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/telegram.txt', path: ./sukkaw_ruleset/telegram_non_ip.txt}
+  # Apple、Microsoft
+  apple_cdn: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/apple_cdn.txt', path: ./sukkaw_ruleset/apple_cdn.txt}
+  apple_cn_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt', path: ./sukkaw_ruleset/apple_cn_non_ip.txt}
+  apple_services: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/apple_services.txt', path: ./sukkaw_ruleset/apple_services.txt}
+  microsoft_cdn_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt', path: ./sukkaw_ruleset/microsoft_cdn_non_ip.txt}
+  microsoft_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft.txt', path: ./sukkaw_ruleset/microsoft_non_ip.txt}
+  # Adobe、PayPal（与 Surge 共用 JupiterH/Surge 的规则集，GitHub 在国内可能无法直连，经代理下载）
+  adobe: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/adobe.list', path: ./ruleset/adobe.list, proxy: 🚀 节点选择}
+  paypal: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/paypal.list', path: ./ruleset/paypal.list, proxy: 🚀 节点选择}
+  # 下载、局域网、国内、国外
+  download_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/download.txt', path: ./sukkaw_ruleset/download_domainset.txt}
+  download_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/download.txt', path: ./sukkaw_ruleset/download_non_ip.txt}
+  lan_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/lan.txt', path: ./sukkaw_ruleset/lan_non_ip.txt}
+  domestic_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/domestic.txt', path: ./sukkaw_ruleset/domestic_non_ip.txt}
+  global_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/global.txt', path: ./sukkaw_ruleset/global_non_ip.txt}
+  # IP
+  reject_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/reject.txt', path: ./sukkaw_ruleset/reject_ip.txt}
+  stream_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/stream.txt', path: ./sukkaw_ruleset/stream_ip.txt}
+  ai_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/ai.txt', path: ./sukkaw_ruleset/ai_ip.txt}
+  telegram_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/telegram.txt', path: ./sukkaw_ruleset/telegram_ip.txt}
+  lan_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/lan.txt', path: ./sukkaw_ruleset/lan_ip.txt}
+  cdn_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/cdn.txt', path: ./sukkaw_ruleset/cdn_ip.txt}
+  download_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/download.txt', path: ./sukkaw_ruleset/download_ip.txt}
+  apple_services_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/apple_services.txt', path: ./sukkaw_ruleset/apple_services_ip.txt}
+  domestic_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/domestic.txt', path: ./sukkaw_ruleset/domestic_ip.txt}
+  china_ip: {<<: *IPCIDR, url: 'https://ruleset.skk.moe/Clash/ip/china_ip.txt', path: ./sukkaw_ruleset/china_ip.txt}
+  china_ip_ipv6: {<<: *IPCIDR, url: 'https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt', path: ./sukkaw_ruleset/china_ip_ipv6.txt}
+
+rules:
+  # ===== Non IP（不触发 DNS 解析）=====
+  # 自定义规则写在这里，优先级最高，例如：
+  # - DOMAIN-SUFFIX,example.com,DIRECT
+
+  # 广告 / 隐私 / 恶意软件 / 钓鱼拦截
+  - RULE-SET,reject_custom,REJECT
+  - RULE-SET,sogouinput,REJECT-DROP
+  - RULE-SET,reject_non_ip_drop,REJECT-DROP
+  - RULE-SET,reject_domainset,REJECT
+  - RULE-SET,reject_extra_domainset,REJECT
+  # 钓鱼域名约 13 万条，内存紧张的设备可注释掉
+  - RULE-SET,reject_phishing_domainset,REJECT
+  - RULE-SET,reject_non_ip,REJECT
+  - RULE-SET,reject_non_ip_no_drop,REJECT
+  # 需直连的服务（热点认证、PT 站、下载工具等），放在拦截之后，避免其中的广告域名被提前放行
+  - RULE-SET,direct_non_ip,DIRECT
+  # 测速
+  - RULE-SET,speedtest_domainset,🚀 节点选择
+  # 静态 CDN
+  - RULE-SET,cdn_domainset,🚀 节点选择
+  - RULE-SET,cdn_non_ip,🚀 节点选择
+  # 流媒体
+  - RULE-SET,stream_non_ip,📺 流媒体
+  # AI（Apple Intelligence 必须在 Apple 规则之前）
+  - RULE-SET,ai_non_ip,🤖 AI
+  - RULE-SET,apple_intelligence_non_ip,🤖 AI
+  # Telegram
+  - RULE-SET,telegram_non_ip,✈️ Telegram
+  # Apple
+  - RULE-SET,apple_cdn,🍎 Apple
+  - RULE-SET,apple_cn_non_ip,DIRECT
+  - RULE-SET,apple_services,🍎 Apple
+  # Microsoft
+  - RULE-SET,microsoft_cdn_non_ip,Ⓜ️ 微软
+  - RULE-SET,microsoft_non_ip,Ⓜ️ 微软
+  # Adobe / PayPal
+  - RULE-SET,adobe,🅰️ Adobe
+  - RULE-SET,paypal,💳 PayPal
+  # 软件更新、系统镜像等大文件下载（放在 Apple / Microsoft 之后，让它们的国内 CDN 先直连）
+  - RULE-SET,download_domainset,⬇️ 下载
+  - RULE-SET,download_non_ip,⬇️ 下载
+  # 局域网 / 国内 / 国外常见服务
+  - RULE-SET,lan_non_ip,DIRECT
+  - RULE-SET,domestic_non_ip,DIRECT
+  - RULE-SET,global_non_ip,🌐 国外网站
+
+  # ===== IP（从这里开始会触发 DNS 解析）=====
+  - RULE-SET,reject_ip,REJECT-DROP
+  - RULE-SET,stream_ip,📺 流媒体
+  - RULE-SET,ai_ip,🤖 AI
+  - RULE-SET,telegram_ip,✈️ Telegram
+  # Telegram 客户端连向上述 IP 以外的地址时直接丢弃，与 Sukka 的做法一致（仅桌面端生效）
+  - PROCESS-NAME,Telegram,REJECT-DROP
+  - RULE-SET,lan_ip,DIRECT
+  - RULE-SET,cdn_ip,🚀 节点选择
+  - RULE-SET,download_ip,⬇️ 下载
+  - RULE-SET,apple_services_ip,🍎 Apple
+  - RULE-SET,domestic_ip,DIRECT
+  - RULE-SET,china_ip,DIRECT
+  - RULE-SET,china_ip_ipv6,DIRECT
+
+  # 兜底
+  - MATCH,🐟 漏网之鱼
