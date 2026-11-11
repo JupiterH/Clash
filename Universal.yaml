@@ -120,7 +120,7 @@ IPCIDR: &IPCIDR {type: http, behavior: ipcidr, format: text, interval: 86400}
 
 rule-providers:
   # 拦截（Reject.list 为自维护的拦截修正，如芒果 TV P2P 信令）
-  reject_custom: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/Reject.list', path: ./ruleset/Reject.list, proxy: 🚀 节点选择}
+  reject_custom: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/Reject.list', path: ./ruleset/Reject.list}
   sogouinput: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/sogouinput.txt', path: ./sukkaw_ruleset/sogouinput.txt}
   reject_non_ip_drop: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt', path: ./sukkaw_ruleset/reject_non_ip_drop.txt}
   reject_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/reject.txt', path: ./sukkaw_ruleset/reject_domainset.txt}
@@ -144,9 +144,9 @@ rule-providers:
   apple_services: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/apple_services.txt', path: ./sukkaw_ruleset/apple_services.txt}
   microsoft_cdn_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt', path: ./sukkaw_ruleset/microsoft_cdn_non_ip.txt}
   microsoft_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft.txt', path: ./sukkaw_ruleset/microsoft_non_ip.txt}
-  # Adobe、PayPal（与 Surge 共用 JupiterH/Surge 的规则集，GitHub 在国内可能无法直连，经代理下载）
-  adobe: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/adobe.list', path: ./ruleset/adobe.list, proxy: 🚀 节点选择}
-  paypal: {<<: *Classical, url: 'https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/paypal.list', path: ./ruleset/paypal.list, proxy: 🚀 节点选择}
+  # Adobe、PayPal（与 Surge 共用 JupiterH/Surge 的规则集，经 jsDelivr 直连下载）
+  adobe: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/adobe.list', path: ./ruleset/adobe.list}
+  paypal: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/paypal.list', path: ./ruleset/paypal.list}
   # 下载、局域网、国内、国外
   download_domainset: {<<: *Domain, url: 'https://ruleset.skk.moe/Clash/domainset/download.txt', path: ./sukkaw_ruleset/download_domainset.txt}
   download_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/download.txt', path: ./sukkaw_ruleset/download_non_ip.txt}
