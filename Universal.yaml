@@ -156,6 +156,7 @@ rule-providers:
   # IP
   reject_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/reject.txt', path: ./sukkaw_ruleset/reject_ip.txt}
   stream_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/stream.txt', path: ./sukkaw_ruleset/stream_ip.txt}
+  ai_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/ai.txt', path: ./sukkaw_ruleset/ai_ip.txt}
   telegram_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/telegram.txt', path: ./sukkaw_ruleset/telegram_ip.txt}
   lan_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/lan.txt', path: ./sukkaw_ruleset/lan_ip.txt}
   cdn_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/ip/cdn.txt', path: ./sukkaw_ruleset/cdn_ip.txt}
@@ -215,6 +216,7 @@ rules:
   # ===== IP（从这里开始会触发 DNS 解析）=====
   - RULE-SET,reject_ip,REJECT-DROP
   - RULE-SET,stream_ip,📺 流媒体
+  - RULE-SET,ai_ip,🤖 AI
   - RULE-SET,telegram_ip,✈️ Telegram
   # Telegram 客户端连向上述 IP 以外的地址时直接丢弃，与 Sukka 的做法一致（仅桌面端生效）
   - PROCESS-NAME,Telegram,REJECT-DROP
