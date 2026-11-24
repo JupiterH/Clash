@@ -185,14 +185,14 @@ rules:
   - RULE-SET,direct_non_ip,DIRECT
   # 测速
   - RULE-SET,speedtest_domainset,🚀 节点选择
+  # AI（须在 CDN 之前：Claude 遥测的 Datadog/Sentry 域名也在 skk cdn 里；Apple Intelligence 须在 Apple 规则之前）
+  - RULE-SET,ai,🤖 AI
+  - RULE-SET,apple_intelligence_non_ip,🤖 AI
   # 静态 CDN
   - RULE-SET,cdn_domainset,🚀 节点选择
   - RULE-SET,cdn_non_ip,🚀 节点选择
   # 流媒体
   - RULE-SET,stream_non_ip,📺 流媒体
-  # AI（Apple Intelligence 必须在 Apple 规则之前）
-  - RULE-SET,ai,🤖 AI
-  - RULE-SET,apple_intelligence_non_ip,🤖 AI
   # Telegram
   - RULE-SET,telegram_non_ip,✈️ Telegram
   # Apple
