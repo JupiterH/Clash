@@ -144,7 +144,8 @@ rule-providers:
   apple_services: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/apple_services.txt', path: ./sukkaw_ruleset/apple_services.txt}
   microsoft_cdn_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt', path: ./sukkaw_ruleset/microsoft_cdn_non_ip.txt}
   microsoft_non_ip: {<<: *Classical, url: 'https://ruleset.skk.moe/Clash/non_ip/microsoft.txt', path: ./sukkaw_ruleset/microsoft_non_ip.txt}
-  # Adobe、PayPal（与 Surge 共用 JupiterH/Surge 的规则集，经 jsDelivr 直连下载）
+  # AI 补充、Adobe、PayPal（与 Surge 共用 JupiterH/Surge 的规则集，经 jsDelivr 直连下载）
+  ai: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/ai.list', path: ./ruleset/ai.list}
   adobe: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/adobe.list', path: ./ruleset/adobe.list}
   paypal: {<<: *Classical, url: 'https://cdn.jsdelivr.net/gh/JupiterH/Surge@main/Rule/paypal.list', path: ./ruleset/paypal.list}
   # 下载、局域网、国内、国外
@@ -192,6 +193,7 @@ rules:
   - RULE-SET,stream_non_ip,📺 流媒体
   # AI（Apple Intelligence 必须在 Apple 规则之前）
   - RULE-SET,ai_non_ip,🤖 AI
+  - RULE-SET,ai,🤖 AI
   - RULE-SET,apple_intelligence_non_ip,🤖 AI
   # Telegram
   - RULE-SET,telegram_non_ip,✈️ Telegram

@@ -39,7 +39,7 @@
 
 - 地区分组使用 `url-test` 类型。官方 mihomo 内核不支持 Surge 的 `smart` 类型（仅 vernesong 的分支版本支持）。
 - 兜底规则为 `MATCH`，Surge 中 `FINAL` 的 `dns-failed` 参数在 mihomo 中没有对应项。
-- 引用自 JupiterH/Surge 的规则集（`Reject.list`、`adobe.list`、`paypal.list`）经 jsDelivr 加速，国内可直连下载。jsDelivr 对分支内容有缓存，规则集更新后可能延迟一段时间生效。
+- 引用自 JupiterH/Surge 的规则集（`Reject.list`、`ai.list`、`adobe.list`、`paypal.list`）经 jsDelivr 加速，国内可直连下载。jsDelivr 对分支内容有缓存，规则集更新后可能延迟一段时间生效。
 
 分流规则的顺序依照 [SukkaW/Surge](https://github.com/SukkaW/Surge) 的说明：所有 `domainset` 与 `non_ip` 规则均置于 `ip` 规则之前，以避免对需要代理的域名提前发起 DNS 解析。
 
